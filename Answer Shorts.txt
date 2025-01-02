@@ -1,0 +1,1127 @@
+1. What is Procedure Oriented Programming (POP)?
+Procedure-Oriented Programming (POP) is a programming paradigm that is structured around procedures or functions. It focuses on a sequence of tasks or instructions to be performed. In POP, the problem is divided into smaller sub-problems or functions, and each function performs a specific task.
+
+Key Characteristics:
+Emphasizes functions over data.
+Functions can share global data.
+Follows a top-down approach.
+Examples: C, Fortran, Pascal.
+2. Example of a POP Language:
+#include <stdio.h>
+
+// Function to calculate the sum of two numbers
+int add(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    int num1, num2, result;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &num1, &num2);
+
+    result = add(num1, num2);
+    printf("Sum: %d\n", result);
+
+    return 0;
+}
+3. Features of C Programming:
+Simple and Efficient: C provides simple constructs and efficient code.
+Portable: C programs can run on different machines with little or no modification.
+Powerful Library: It includes a rich set of built-in functions and operators.
+Modularity: Code can be divided into functions for better organization.
+Middle-Level Language: C bridges the gap between high-level and low-level programming.
+Structured Programming: Encourages a top-down approach.
+Dynamic Memory Allocation: Provides malloc, calloc, free for memory management.
+4. Order of Precedence in C:
+Operators in C have a predefined precedence to decide the order of evaluation in an expression.
+
+Order of Precedence (from highest to lowest):
+
+Postfix: (), [], ->, . (left to right)
+Unary: +, -, !, ~, ++, --, sizeof (right to left)
+Multiplicative: *, /, % (left to right)
+Additive: +, - (left to right)
+Shift: <<, >> (left to right)
+Relational: <, <=, >, >= (left to right)
+Equality: ==, != (left to right)
+Bitwise AND: & (left to right)
+Bitwise XOR: ^ (left to right)
+Bitwise OR: | (left to right)
+Logical AND: && (left to right)
+Logical OR: || (left to right)
+Conditional: ?: (right to left)
+Assignment: =, +=, -=, etc. (right to left)
+Comma: , (left to right)
+5. Purpose of ftell in C:
+ftell(FILE *stream) is used to determine the current file position of the file pointer in a file stream. It returns the position as a long integer relative to the beginning of the file.
+
+Example:
+FILE *file = fopen("example.txt", "r");
+if (file) {
+    printf("Current position: %ld\n", ftell(file));
+    fclose(file);
+}
+6. Purpose of rewind in C:
+rewind(FILE *stream) resets the file pointer to the beginning of the file. Unlike fseek, it does not return a value.
+
+Example:
+FILE *file = fopen("example.txt", "r");
+if (file) {
+    rewind(file); // Moves the file pointer to the start
+    fclose(file);
+}
+7. Difference Between Array and Pointer:
+Aspect			Array
+Definition	Collection of elements of the same type.
+Memory		Allocates a block of contiguous memory.
+Size		Fixed size, defined at declaration.
+Arithmetic	Operates on the base address.
+Example		int arr[5];
+
+Aspect			Pointer
+Definition	Variable storing a memory address.
+Memory		Can point to any memory location.
+Size		Dynamic, can be changed.
+Arithmetic	Operates on any pointed address.
+Example		int *ptr;
+
+8. Two-Dimensional Array Using Pointer:
+#include <stdio.h>
+
+int main() {
+    int arr[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    int (*ptr)[3] = arr;
+
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            printf("%d ", ptr[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}
+9. Array of Pointers vs Pointer to an Array:
+Aspect				Array of Pointers
+Definition		Array with each element as a pointer
+Access			Access elements using *arr[i]
+Syntax				int *arr[3];
+Usage			Handles multiple addresses
+Memory Allocation	Each pointer element stores its own address
+
+Aspect				Pointer to an Array
+Definition		Pointer pointing to an entire array
+Access			Access elements using (*ptr)[i]
+Syntax				int (*ptr)[3];
+Usage			Points to a fixed-size array
+Memory Allocation	Points to contiguous memory block
+
+
+
+
+10. Can the if Statement Be Used to Compare Strings?
+In C, strings cannot be directly compared using if (str1 == str2) because this compares the pointers, not the contents. Use strcmp from <string.h> for comparison.
+
+Example:
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str1[] = "Hello";
+    char str2[] = "Hello";
+
+    if (strcmp(str1, str2) == 0) {
+        printf("Strings are equal.\n");
+    } else {
+        printf("Strings are not equal.\n");
+    }
+
+    return 0;
+}
+11. Can you pass an entire structure to a function?
+Yes, you can pass an entire structure to a function in C. This can be done in two ways:
+
+By Value: A copy of the structure is passed to the function.
+By Reference: A pointer to the structure is passed to the function.
+Example:
+#include <stdio.h>
+
+struct Student {
+    char name[50];
+    int age;
+};
+
+void display(struct Student s) {
+    printf("Name: %s, Age: %d\n", s.name, s.age);
+}
+
+int main() {
+    struct Student s1 = {"John", 20};
+    display(s1); // Passing the structure by value
+    return 0;
+}
+12. What is gets() function?
+The gets() function reads a string input from the standard input (stdin) until a newline character is encountered. However, it is unsafe as it does not perform boundary checks, potentially leading to buffer overflow.
+
+Example:
+#include <stdio.h>
+
+int main() {
+    char str[50];
+    printf("Enter a string: ");
+    gets(str); // Reads input into str
+    printf("You entered: %s\n", str);
+    return 0;
+}
+Note: Avoid using gets(); prefer safer alternatives like fgets().
+
+13. What is an Array of Pointers in C?
+An array of pointers is an array where each element is a pointer pointing to another variable or memory location. It is commonly used for managing arrays of strings.
+
+Example:
+#include <stdio.h>
+
+int main() {
+    char *arr[] = {"Hello", "World", "C Programming"};
+    for (int i = 0; i < 3; i++) {
+        printf("%s\n", arr[i]);
+    }
+    return 0;
+}
+14. How is fopen() used?
+The fopen() function is used to open a file in a specified mode. It returns a pointer to the FILE object associated with the file.
+
+Syntax:
+FILE *fopen(const char *filename, const char *mode);
+Example:
+FILE *file = fopen("example.txt", "r"); // Open file in read mode
+if (file == NULL) {
+    printf("Error opening file.\n");
+} else {
+    printf("File opened successfully.\n");
+    fclose(file); // Close the file
+}
+15. How is a file closed?
+A file is closed using the fclose() function. It ensures that all data is written to the file and releases any resources used.
+
+Example:
+FILE *file = fopen("example.txt", "r");
+if (file != NULL) {
+    fclose(file); // Closes the file
+    printf("File closed successfully.\n");
+}
+16. What is a Random Access File?
+A random access file allows data to be read or written at any position without reading sequentially from the beginning. It is useful for large files or databases.
+
+Example:
+Use fseek() to move the file pointer to a specific location.
+Use ftell() to determine the current position.
+17. What are Keywords?
+Keywords are reserved words in C with predefined meanings and purposes. They cannot be used as identifiers (variable names, function names, etc.).
+
+Example of Keywords:
+int, float, return, if, else, while, for, etc.
+
+18. What is the advantage of an array over individual variables?
+Advantages:
+Compact Representation: Multiple elements of the same type can be stored together.
+Ease of Access: Elements can be accessed using indices.
+Reduced Code Complexity: Avoids declaring multiple variables.
+Dynamic Operations: Arrays work well with loops for processing large datasets.
+19. What are the different types of control structures in programming?
+Control structures determine the flow of program execution.
+Types:
+
+Sequential: Code executes line by line.
+Selection (Decision-Making):
+if, else, switch.
+Iteration (Loops):
+for, while, do-while.
+Jump Statements:
+break, continue, goto.
+20. Difference Between Structure and Union in C
+Aspect					Structure
+Memory Allocation	Allocates memory for all members separately.
+Size				Sum of the sizes of all members.
+Usage			Used for storing unrelated data types.
+Access			All members can be accessed at the same time.
+				Example of Structure:
+				struct Student {
+    					char name[50];
+   					int age;
+					};
+
+Aspect					Union
+Memory Allocation	Allocates shared memory for all members.
+Size				Size of the largest member.
+Usage			Used for storing mutually exclusive data.
+Access			Only one member can be accessed at a time.
+				Example of Union:
+				union Data {
+    					int i;
+   					float f;
+					};
+
+21. Write Advantages and Disadvantages of Pointer.
+Advantages:
+Efficient Memory Management: Allows dynamic memory allocation and deallocation.
+Data Structures: Facilitates implementation of complex structures like linked lists, trees, and graphs.
+Function Argument Passing: Enables call by reference, allowing functions to modify variables directly.
+Access Hardware: Useful in system programming to directly manipulate memory or hardware.
+Array Handling: Simplifies operations on arrays and strings.
+Disadvantages:
+Complexity: Difficult to understand and prone to errors like dereferencing null or uninitialized pointers.
+Debugging Issues: Hard to trace pointer-related bugs.
+Security Risks: Can lead to vulnerabilities like buffer overflows.
+Memory Leaks: Improper memory management can lead to wasted memory.
+22. Describe the file opening mode “w+”.
+The "w+" mode opens a file for both reading and writing.
+
+If the file exists, its contents are truncated to zero.
+If the file does not exist, a new file is created.
+Example:
+FILE *file = fopen("example.txt", "w+");
+if (file) {
+    fputs("Writing to file.", file);
+    rewind(file); // Moves pointer to the beginning
+    char buffer[50];
+    fgets(buffer, 50, file);
+    printf("Content: %s\n", buffer);
+    fclose(file);
+}
+23. What is Command Line Argument in C?
+Command-line arguments allow passing arguments to a program during its execution via the command line. These are accessed in main() as:
+
+int main(int argc, char *argv[]);
+argc: Number of arguments (including program name).
+argv: Array of strings representing the arguments.
+Example:
+#include <stdio.h>
+
+int main(int argc, char *argv[]) {
+    printf("Program name: %s\n", argv[0]);
+    if (argc > 1) {
+        printf("First argument: %s\n", argv[1]);
+    }
+    return 0;
+}
+24. What is a File Pointer?
+A file pointer is a pointer of type FILE* used to interact with files. It points to a structure containing information about the file being accessed.
+
+Example:
+FILE *file = fopen("example.txt", "r");
+if (file) {
+    // File operations
+    fclose(file);
+}
+25. What is a C Program?
+A C program is a collection of instructions written in the C programming language to perform specific tasks. It typically includes:
+
+Header files (#include directives).
+main() function as the entry point.
+Functions, variables, and statements for processing data.
+26. What is an Identifier?
+An identifier is the name used to identify variables, functions, arrays, or other user-defined elements in a program.
+
+Rules: Must start with a letter or underscore, cannot be a keyword, and must consist of alphanumeric characters.
+Example:
+int age;   // 'age' is an identifier
+float price;
+27. What is a Nested Loop?
+A nested loop is a loop inside another loop. The inner loop executes completely for each iteration of the outer loop.
+
+Example:
+#include <stdio.h>
+
+int main() {
+    for (int i = 1; i <= 3; i++) {
+        for (int j = 1; j <= 2; j++) {
+            printf("i = %d, j = %d\n", i, j);
+        }
+    }
+    return 0;
+}
+28. How Do You Access the Values Within an Array?
+Array values are accessed using their indices. Indices start from 0.
+
+Example:
+int arr[3] = {10, 20, 30};
+printf("%d\n", arr[0]); // Access the first element
+printf("%d\n", arr[2]); // Access the third element
+29. What is a Structure?
+A structure in C is a user-defined data type that groups different types of variables under a single name.
+
+Example:
+struct Student {
+    char name[50];
+    int age;
+};
+30. What is a Union?
+A union in C is a user-defined data type where all members share the same memory location. Only one member can hold a value at a time.
+
+Example:
+union Data {
+    int i;
+    float f;
+};
+31. What is a Stream in C?
+A stream in C refers to the flow of data between the program and an external device (like a file or console). Streams can be:
+
+Input Streams: For reading data (e.g., stdin).
+Output Streams: For writing data (e.g., stdout, stderr).
+Example:
+printf("Hello, World!\n"); // Writes to stdout
+(32) Difference between file opening mode r+ and w+ in C:
+r+: Opens the file for both reading and writing. The file must already exist, or the operation will fail. The file pointer is positioned at the beginning of the file.
+w+: Opens the file for both reading and writing. If the file does not exist, it will be created. If the file exists, it is truncated (all contents are deleted) before writing.
+(33) What is buffer in C?
+A buffer in C is a temporary storage area (usually an array or a memory location) used to store data before it is processed or transferred. It is often used in I/O operations to optimize reading from or writing to devices like disks, keyboards, or networks.
+
+(34) What is Character set in C?
+A character set in C refers to the set of characters used in the C programming language. This includes:
+
+Letters: Uppercase and lowercase alphabet (A-Z, a-z).
+Digits: Numbers (0-9).
+Special characters: Such as +, -, *, /, =, etc.
+Whitespace: Space, tab, newline, etc.
+Escape sequences: Such as \n (newline), \t (tab), etc.
+(35) C Language Syntax Rules:
+Here are the basic syntax rules for C:
+
+Keywords: Reserved words such as int, float, if, while, etc.
+Identifiers: Names for variables, functions, arrays, etc.
+Semicolons: Every statement in C must end with a semicolon (;).
+Braces: Blocks of code are enclosed in {}.
+Comments: C supports single-line (//) and multi-line (/*...*/) comments.
+Case Sensitivity: C is case-sensitive, so variable and Variable are different.
+Data Types: Proper data types must be specified for variables (e.g., int, float).
+(36) What is an Infinite Loop?
+An infinite loop is a loop that continues to run indefinitely because its termination condition is never met or doesn't exist. Example:
+
+while (1) {
+    // This loop will run forever.
+}
+(37) Syntax for for, do-while, while, if, and switch:
+1. for Loop
+Used when the number of iterations is known.
+
+for (initialization; condition; increment/decrement) {
+    // Body of the loop
+}
+Example:
+
+for (int i = 0; i < 5; i++) {
+    printf("%d ", i);  // Output: 0 1 2 3 4
+}
+2. do-while Loop
+Executes the loop body at least once, regardless of the condition.
+
+
+do {
+    // Body of the loop
+} while (condition);
+Example:
+
+int i = 0;
+do {
+    printf("%d ", i);
+    i++;
+} while (i < 5);  // Output: 0 1 2 3 4
+3. while Loop
+Executes the loop body as long as the condition is true.
+
+while (condition) {
+    // Body of the loop
+}
+Example:
+
+int i = 0;
+while (i < 5) {
+    printf("%d ", i);
+    i++;
+}  // Output: 0 1 2 3 4
+4. if Statement
+Used for decision-making.
+if (condition) {
+    // Statements if the condition is true
+}
+Example:
+
+int num = 10;
+if (num > 5) {
+    printf("Number is greater than 5");
+}
+5. if-else Statement
+Provides an alternative path when the condition is false.
+
+if (condition) {
+    // Statements if the condition is true
+} else {
+    // Statements if the condition is false
+}
+Example:
+
+int num = 10;
+if (num > 15) {
+    printf("Greater than 15");
+} else {
+    printf("15 or less");
+}
+6. switch Statement
+Used for multiple conditional paths.
+switch (expression) {
+    case value1:
+        // Statements for value1
+        break;
+    case value2:
+        // Statements for value2
+        break;
+    // Additional cases...
+    default:
+        // Default statements
+}
+Example:
+
+int choice = 2;
+switch (choice) {
+    case 1:
+        printf("Choice is 1");
+        break;
+    case 2:
+        printf("Choice is 2");
+        break;
+    default:
+        printf("Invalid choice");
+}
+These structures are fundamental for controlling the flow of a program in C.
+
+(40) What are Pointers?
+Pointers in C are variables that store the memory address of another variable. A pointer allows you to directly access and manipulate the value stored in that memory location. The syntax to declare a pointer is:
+
+int *ptr;
+Where ptr is a pointer to an integer. To store the address of a variable x in ptr, you would do:
+
+ptr = &x;
+Here, & is the address-of operator.
+
+(41) Differentiate Function to Pointer and Pointer to Function:
+Function to Pointer
+Definition: Assigns the address of a function to a pointer so that the pointer can be used to call the function.
+Purpose: Enables calling a function indirectly through a pointer.
+Flexibility: You can dynamically change the function being called by reassigning the pointer to a different function.
+Syntax:
+
+void (*ptr)(int); // Declare a function pointer
+ptr = &function_name; // Assign function address to the pointer
+ptr(argument); // Call the function using the pointer
+Example:
+
+#include <stdio.h>
+
+void display(int num) {
+    printf("Number: %d\n", num);
+}
+
+void show(int num) {
+    printf("Value: %d\n", num);
+}
+
+int main() {
+    void (*funcPtr)(int);
+    funcPtr = &display;   // Assign the function's address
+    funcPtr(5);           // Call the function using the pointer
+    funcPtr = &show;      // Reassign to a different function
+    funcPtr(10);          // Call the new function
+    return 0;
+}
+
+Pointer to Function
+Definition: A pointer specifically declared to store the address of a function.
+Purpose: Enables indirect function calls and is commonly used in callback mechanisms.
+Use in Arrays: Can be used in arrays of function pointers to call different functions dynamically based on conditions.
+Syntax:
+
+void (*ptr)(int) = function_name; // Declare and assign a function pointer
+ptr(argument); // Call the function indirectly through the pointer
+Example:
+
+#include <stdio.h>
+
+void greetMorning(int times) {
+    for (int i = 0; i < times; i++) {
+        printf("Good Morning!\n");
+    }
+}
+
+void greetEvening(int times) {
+    for (int i = 0; i < times; i++) {
+        printf("Good Evening!\n");
+    }
+}
+
+int main() {
+    void (*ptrArray[2])(int) = {greetMorning, greetEvening}; // Array of function pointers
+    ptrArrayCall greetMorning
+    ptrArray ; //greetEvening
+    return 0;
+}
+
+(42) What is file in C?
+In C, a file is a collection of data stored in a storage device like a hard drive. Files are used to store data that needs to persist even after the program ends. The C Standard Library provides functions for file handling, such as fopen(), fread(), fwrite(), and fclose(). These allow programs to read from and write to files. There are two types of files:
+
+Text files: Stores data as plain text.
+Binary files: Stores data in binary format.
+(43) What are the escape sequences in C?
+Escape sequences in C are special character combinations used to represent certain control characters. They start with a backslash (\). Some common escape sequences are:
+
+\n: Newline
+\t: Horizontal tab
+\\: Backslash
+\': Single quote
+\": Double quote
+\r: Carriage return
+\b: Backspace
+\f: Form feed
+\0: Null character (used to terminate strings)
+(44) What is Operator in C?
+An operator in C is a symbol used to perform operations on variables or values. C supports various types of operators:
+
+Arithmetic operators: +, -, *, /, %
+Relational operators: ==, !=, >, <, >=, <=
+Logical operators: &&, ||, !
+Assignment operators: =, +=, -=, *=, /=, %=
+Bitwise operators: &, |, ^, ~, <<, >>
+Unary operators: +, -, ++, --, &, *
+Ternary operator: ?:
+(45) Explain Ternary Operator with Example:
+The ternary operator in C is a shorthand for an if-else statement. It is used to evaluate a condition and return one of two values based on the result of that condition. The syntax is:
+
+condition ? expression_if_true : expression_if_false;
+Example:
+
+int a = 10, b = 5;
+int max = (a > b) ? a : b;  // If a is greater than b, max will be a, otherwise max will be b.
+printf("%d", max);  // Output: 10
+Here, if the condition a > b is true, the result is a; otherwise, it is b.
+(46) How does a nested if statement work?
+A nested if statement is an if statement placed inside another if statement. The inner if statement is executed only if the outer if condition is true. It allows for more complex conditions to be checked in sequence.
+
+Example:
+
+int a = 10, b = 5;
+if (a > b) {
+    if (a == 10) {
+        printf("a is 10\n");
+    }
+}
+Here, the inner if is checked only if the outer if (a > b) is true.
+
+(47) What are the string methods?
+In C, strings are arrays of characters, and C provides several standard functions (from string.h) to manipulate strings. Common string functions include:
+
+strlen(): Returns the length of a string.
+strcpy(): Copies one string to another.
+strcat(): Concatenates two strings.
+strcmp(): Compares two strings.
+strchr(): Finds the first occurrence of a character in a string.
+strstr(): Finds the first occurrence of a substring in a string.
+strtok(): Tokenizes a string into parts.
+(48) What is Recursion?
+Recursion in C is a process where a function calls itself in order to solve a problem. A recursive function must have a base case to stop the recursion.
+
+Example:
+
+int factorial(int n) {
+    if (n == 0) return 1;  // Base case
+    return n * factorial(n - 1);  // Recursive call
+}
+(49) What are the functions available in math.h header file?
+The math.h header file provides functions for mathematical operations, including:
+
+sin(): Sine of an angle.
+cos(): Cosine of an angle.
+tan(): Tangent of an angle.
+sqrt(): Square root.
+pow(): Power of a number.
+log(): Natural logarithm.
+exp(): Exponential function.
+abs(): Absolute value of an integer.
+ceil(): Round up to the nearest integer.
+floor(): Round down to the nearest integer.
+(50) Differentiate break and continue:
+break:
+It terminates the entire loop immediately, and the program continues with the statement after the loop.
+It can be used to exit from for, while, or switch statements.
+It can also be used in switch statements to prevent falling through to the next case.
+Example:
+
+switch (n) {
+    case 1:
+        printf("One");
+        break;
+    case 2:
+        printf("Two");
+        break;
+}
+Example for loop:
+
+for (int i = 0; i < 5; i++) {
+    if (i == 3) {
+        break;  // Breaks out of the loop when i equals 3
+    }
+    printf("%d ", i);
+}
+// Output: 0 1 2
+
+continue:
+It skips the current iteration of the loop and moves to the next iteration.
+It does not terminate the loop; instead, it jumps to the next loop cycle.
+It can only be used inside loops and will result in an error if used outside of a loop.
+Example:
+
+// continue outside a loop results in an error
+continue;  // Error: 'continue' not allowed outside of a loop
+Example for loop:
+
+for (int i = 0; i < 5; i++) {
+    if (i % 2 == 0) {
+        continue;  // Skips even numbers
+    }
+    printf("%d ", i);
+}
+// Output: 1 3
+
+(51) Differentiate while and do-while loop:
+while loop vs do-while loop:
+Condition Check:
+
+The while loop checks the condition before entering the loop.
+The do-while loop checks the condition after executing the loop's body.
+Execution Guarantee:
+
+In a while loop, if the condition is false initially, the loop will not execute at all.
+In a do-while loop, the loop will always execute at least once, even if the condition is false initially.
+Use Case:
+
+The while loop is typically used when the number of iterations is not known beforehand, and you want to repeat the loop as long as a condition remains true. It is best when the condition needs to be checked before every iteration.
+The do-while loop is used when you need the loop to run at least once, regardless of the condition, and then continue as long as the condition is true. It is useful when the loop must execute an action initially before checking the condition.
+Syntax:
+
+while loop:
+
+while (condition) {
+    // Code to execute
+}
+do-while loop:
+
+do {
+    // Code to execute
+} while (condition);
+Examples:
+while loop:
+
+int i = 0;
+while (i < 5) {
+    printf("%d\n", i);
+    i++;
+}
+This loop checks the condition i < 5 before executing the loop body. If i is initially 5 or greater, the loop won't run.
+do-while loop:
+
+int i = 0;
+do {
+    printf("%d\n", i);
+    i++;
+} while (i < 5);
+This loop will always execute the printf statement at least once, even if i is initially 5 or greater.
+
+
+(52) Differentiate call by value and call by reference:
+
+Feature				Call by Value
+Value Passed		The actual value of the argument.
+Effect on Argument	Does not modify the original argument.
+Memory Usage		More memory usage due to copying values.
+Performance		Less efficient for large data.
+Safety			Safer, as the original argument cannot be changed.
+
+Feature				Call by Reference
+Value Passed		The address (reference) of the argument.
+Effect on Argument	Modifies the original argument.
+Memory Usage		More memory-efficient as only the address is passed.
+Performance		More efficient for large data.
+Safety			Less safe, as the original argument can be changed.
+
+Example:
+Call by Value:
+
+#include <stdio.h>
+
+void addFive(int a) {
+    a = a + 5;
+}
+
+int main() {
+    int x = 10;
+    addFive(x);
+    printf("x = %d\n", x);  // x remains 10 because it's passed by value
+    return 0;
+}
+Call by Reference:
+
+#include <stdio.h>
+
+void addFive(int *a) {
+    *a = *a + 5;
+}
+
+int main() {
+    int x = 10;
+    addFive(&x);
+    printf("x = %d\n", x);  // x becomes 15 because it's passed by reference
+    return 0;
+}
+
+
+
+(53) What is the use of getch() function?
+The getch() function is used to read a single character from the user’s input. It does not require the user to press the Enter key. It is typically used for capturing user input one character at a time, often in console-based applications.
+
+Example:
+
+char ch;
+ch = getch();  // Gets a character from user without pressing Enter
+(54) How to cast one data type to another data type, with and without using a pointer?
+Without using a pointer: You can cast one data type to another by simply using the cast operator (type).
+Example:
+
+int a = 5;
+float b = (float)a;  // Casting int to float
+With using a pointer: You can cast a pointer type using the cast operator on the pointer.
+Example:
+
+int a = 5;
+float *b = (float *)&a;  // Casting address of int to float pointer
+(55) What are comment lines in C?
+Comment lines in C are used to add explanatory notes in the code, making it easier for others (or yourself) to understand the program. C supports two types of comments:
+
+Single-line comments: Begin with // and extend to the end of the line.
+// This is a single-line comment
+Multi-line comments: Enclosed between /* and */ and can span multiple lines.
+/* This is a 
+   multi-line comment */
+(56) What is an Expression?
+An expression in C is a combination of variables, constants, operators, and functions that are evaluated to produce a value. Expressions can be simple or complex. For example:
+
+Simple expression: a + b
+Complex expression: (x * y) + (a - b)
+
+(58) What are the different data types in C?
+C supports several built-in data types, classified into:
+
+Basic data types:
+int: Integer type.
+float: Floating-point type.
+double: Double precision floating-point type.
+char: Character type (stores a single character).
+Derived data types:
+Arrays, pointers, structures, unions, and functions.
+Void type:
+void: Represents an empty type (often used in functions with no return value).
+(59) Difference between bitwise AND (&) and logical AND (&&) operator with example:
+Feature				Bitwise AND (&)	
+Operates on		Individual bits of operands.
+Operands		Can be integers (e.g., int, char).
+Result	   Returns an integer where each bit is the result of AND operation.
+Short-circuiting   No short-circuiting. Both operands are evaluated. 
+Common Use	 Performing bit-level operations on numbers.
+
+Feature					Logical AND (&&)
+Operates on			Boolean expressions or conditions.
+Operands			Must be boolean expressions (e.g., true or false).
+Result	   			Returns 1 (true) or 0 (false).
+Short-circuiting  		Yes, the second operand is not evaluated if the first is false.
+Common Use			 Combining multiple conditions in control statements (e.g., if, while).
+
+Example of bitwise &:
+#include <stdio.h>
+
+int main() {
+    int a = 5;  // In binary: 0101
+    int b = 3;  // In binary: 0011
+    int result = a & b; // Result in binary: 0001, which is 1 in decimal
+    
+    printf("Result of 5 & 3 = %d\n", result); // Output: 1
+    return 0;
+}
+Example of logical &&:
+#include <stdio.h>
+
+int main() {
+    int a = 5;
+    int b = 3;
+    if (a > 0 && b > 0) {
+        printf("Both a and b are positive.\n");
+    }
+    return 0;
+}
+
+(60) What is a Preprocessor directive?
+A preprocessor directive is a command in C that is processed before the actual compilation begins. It starts with a # symbol. Examples include:
+
+#include: Includes header files.
+#define: Defines macros.
+#if, #else, #endif: Conditional compilation.
+#undef: Undefines a macro.
+Example:
+
+#define PI 3.14
+#include <stdio.h>
+(61) What is the use of sizeof() operator?
+The sizeof() operator is used to determine the size (in bytes) of a variable or data type. It returns the size of the operand. Example:
+
+int x = 10;
+printf("Size of int: %zu\n", sizeof(x));  // Output: Size of int: 4 (on most systems)
+(62) What is the difference between void main() and int main()?
+Feature					int main()
+Return Type		Returns an integer value to the operating system.
+Standard Compliance	Complies with the C standard (ISO C).
+Return Value	    Returns 0 (success) or a non-zero value (error).
+Usage	      Preferred and recommended in professional C programming.
+
+Feature				void main()
+Return Type		Does not return any value.
+Standard Compliance	Not compliant with the C standard (ISO C).
+Return Value	    No return value, leading to undefined behavior in some cases.
+Usage	      Used in some older compilers or in non-standard scenarios.
+
+Example of int main():
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;  // Return 0 to indicate success
+}
+Example of void main():
+#include <stdio.h>
+
+void main() {
+    printf("Hello, World!\n");
+    // No return statement
+}
+
+(63) What is the difference between actual and formal argument?
+Feature				Actual Argument	
+Definition      The value or reference passed to the function.
+Location		Used in the function call.
+Value		Can be a literal value, a variable, or an expression.
+Scope			The scope is limited to the function call.
+Example			x, y in the function call add(x, y).
+
+Feature				Formal Argument
+Definition      The variable declared in the function definition to receive the value.
+Location		Used in the function definition.
+Value		Represents a placeholder for the value passed.
+Scope			The scope is limited to the function definition.
+Example			a, b in the function definition void add(int a, int b).
+
+(64) Write down different types of variables in C.
+In C, variables can be categorized based on their scope, lifetime, and data type:
+
+Local variables: Declared inside a function and accessible only within that function.
+Global variables: Declared outside of all functions, accessible throughout the program.
+Static variables: Retain their value between function calls. Declared using the static keyword.
+External variables: Declared in one file and accessed in another file using extern.
+(65) How does a return statement used in void and non-void function?
+In a void function: The return statement is used to exit the function early, but it does not return any value. Example:
+void printMessage() {
+    printf("Hello, World!\n");
+    return;  // Exit the function, no value returned
+}
+In a non-void function: The return statement is used to return a value to the calling function. Example:
+int add(int a, int b) {
+    return a + b;  // Returns the sum of a and b
+}
+(66) Differentiate between auto & static variables. Give examples for each.
+Feature					Auto Variables
+Storage Class		auto (default for local variables)
+Scope			Local to the block or function where defined
+Lifetime  	 Created when the block/function is entered, destroyed when it is exited
+Initialization		May contain garbage values if not initialized
+Persistence		Does not retain value across function calls
+Default Behavior		auto is the default for local variables
+
+Feature				   Static Variables
+Storage Class				static
+Scope			 Local to the block or function but retains value across calls
+Lifetime   		Exist for the lifetime of the program, initialized only once
+Initialization		Initialized to zero by default, or given explicit initialization
+Persistence		Retains its value between function calls
+Default Behavior	Must explicitly be declared as static
+
+Example of Auto:
+#include <stdio.h>
+
+void myFunction() {
+    auto int a = 5; // 'auto' is optional here, as 'a' is local
+    printf("Value of a: %d\n", a); // Prints 5
+}
+
+int main() {
+    myFunction();
+    return 0;
+}
+Example of static:
+#include <stdio.h>
+
+void counter() {
+    static int count = 0; // Initialized once and retains its value
+    count++;
+    printf("Count: %d\n", count);
+}
+
+int main() {
+    counter();  // Prints Count: 1
+    counter();  // Prints Count: 2
+    counter();  // Prints Count: 3
+    return 0;
+}
+
+(67) Define an Algorithm.
+An algorithm is a step-by-step procedure or formula for solving a problem. It is a well-defined, finite sequence of instructions to perform a task or solve a particular problem.
+Example:
+Algorithm FindMax
+Input: Two numbers a, b
+Output: The maximum of a and b
+
+1. If a > b, then
+       Return a
+2. Else
+       Return b
+End
+
+(68) What are the characteristics of an algorithm?
+The key characteristics of an algorithm are:
+
+Finiteness: The algorithm must terminate after a finite number of steps.
+Definiteness: Each step of the algorithm must be precisely defined.
+Input: An algorithm should take zero or more inputs.
+Output: An algorithm should produce at least one output.
+Effectiveness: Every operation in the algorithm should be basic enough to be carried out.
+Generality: An algorithm should solve a class of problems, not just one specific problem.
+(69) Distinguish between an algorithm and a flowchart:
+Feature				Algorithm							
+Definition		Step-by-step written procedure for solving a problem.
+Representation		Text-based (pseudocode, written instructions).			
+Clarity			Requires logical interpretation.				
+Ease of Use		Better for expressing complex steps in detail.			
+Use Case		Programming and problem-solving.				
+Tool			Pseudocode, programming languages.				
+Complexity		More flexible for handling complex logic.	
+
+Feature					Flowchart
+Definition		Visual diagram representing steps of a process.
+Representation		Graphic-based (shapes, arrows).
+Clarity			Provides a visual representation of the process.
+Ease of Use		Better Better for visualizing simple processes.
+Use Case		Business process modeling, system design.
+Tool			Diagram drawing tools (Visio, Lucidchart, etc.).
+Complexity		May become complex and hard to read with many conditions.
+
+
+
+
+Example:
+
+Problem: Find the maximum of two numbers.
+
+Algorithm:
+
+Input two numbers, a and b.
+If a > b, then output a.
+Else, output b.
+
+Flowchart:
+
++--------------------------+
+|  Start                   |
++--------------------------+
+        |
+        v
++--------------------------+
+|  Input a and b           |
++--------------------------+
+        |
+        v
++--------------------------+
+|  Is a > b?               |
++--------------------------+
+     |         |
+     v         v
++--------+  +--------+
+|  Output a |  Output b |
++--------+  +--------+
+     |         |
+     +---------+
+        |
+        v
++--------------------------+
+|  End                     |
++--------------------------+
+
+(70) List the various symbols used to draw a flowchart:
+Common flowchart symbols include:
+
+Oval: Start or end of the process.
+Rectangle: Represents a process or operation.
+Parallelogram: Input or output operation (e.g., scanf, printf).
+Diamond: Decision or conditional statement (e.g., if, while).
+Arrow: Represents the flow of control or data.
+Circle: Connector (used when the flowchart is too large and needs to be continued on another page).
+(71) Write a pseudo code to find the maximum of three numbers.
+Pseudo code to find the maximum of three numbers:
+
+BEGIN
+   READ a, b, c
+   IF a >= b AND a >= c THEN
+       PRINT a
+   ELSE IF b >= a AND b >= c THEN
+       PRINT b
+   ELSE
+       PRINT c
+END
+(72) Discuss the concept of the programming paradigm.
+A programming paradigm is a style or approach to programming that dictates how programs are structured and executed. Common paradigms include:
+
+Imperative Programming: Focuses on describing a sequence of steps or instructions to perform.
+Declarative Programming: Focuses on describing what the program should accomplish without specifying how.
+Object-Oriented Programming (OOP): Based on the concept of objects, which are instances of classes.
+Functional Programming: Treats computation as the evaluation of mathematical functions.
+Logic Programming: Based on formal logic, where a program consists of a set of facts and rules.
+(73) What is meant by a data type? Give its classifications.
+A data type defines the type of data a variable can hold, such as integer, floating-point, or character. It also determines the operations that can be performed on the data. Data types in C are classified into:
+
+Basic Data Types:
+int, float, double, char
+Derived Data Types:
+Arrays, pointers, structures, unions
+Void Type:
+void: Represents the absence of any data type.
+(74) Analyze why keywords are not to be used as identifiers.
+Keywords are reserved words in C that have special meanings and predefined functionalities. If they are used as identifiers, it can create ambiguity or confusion in the code, as the compiler would not be able to distinguish between the keyword's intended purpose and the identifier. For example, int, if, return are keywords and cannot be used as variable names.
+
+(75) Evaluate the following C expression:
+A = 6 + 10**2 / 50 - 2 + 4
+
+To evaluate this expression, we follow the operator precedence and rules of C:
+
+The ** operator is not valid in C. If this is a typo and is meant to be * (multiplication), then we evaluate as follows:
+A = 6 + 10 * 2 / 50 - 2 + 4
+First, evaluate 10 * 2 = 20, so the expression becomes:
+A = 6 + 20 / 50 - 2 + 4
+Next, evaluate 20 / 50 = 0 (integer division):
+A = 6 + 0 - 2 + 4
+Finally, evaluate from left to right: 6 + 0 = 6, 6 - 2 = 4, and 4 + 4 = 8.
+Thus, A = 8.
+
+													Mir Afaque Alli	
