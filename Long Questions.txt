@@ -1,0 +1,555 @@
+1. Storage Class in C
+A storage class in C determines the scope, lifetime, visibility, and default initial value of a variable. Essentially, it defines where a variable can be accessed (its scope) and how long it exists in memory (lifetime).
+
+C provides four types of storage classes:
+
+Automatic (auto)
+External (extern)
+Static (static)
+Register (register)
+1. Automatic Storage Class (auto)
+Default storage class for local variables declared inside functions.
+Scope: Local to the block where the variable is declared.
+Lifetime: Exists only during the execution of the block.
+Default Value: Garbage value (uninitialized).
+Keyword: auto (optional, rarely used as auto is implicit).
+Example
+
+void func() {
+    auto int x = 10; // 'auto' is optional
+    printf("%d", x);
+}
+2. External Storage Class (extern)
+Used to declare a variable defined in another file or outside any function.
+Allows variables to be shared across multiple files.
+Scope: Global.
+Lifetime: Exists throughout the program's execution.
+Default Value: 0 (if uninitialized).
+Keyword: extern.
+Example
+File1.c
+
+
+int x = 10; // Defined globally
+File2.c
+
+extern int x; // Declaration
+printf("%d", x); // Output: 10
+3. Static Storage Class (static)
+Retains the variable's value between function calls.
+Used to limit scope of a variable to a file (for global variables).
+Scope:
+For variables inside functions: Local to the function.
+For global variables: Limited to the file.
+Lifetime: Exists throughout the program's execution.
+Default Value: 0 (if uninitialized).
+Keyword: static.
+Example
+
+void func() {
+    static int count = 0; // Retains its value
+    count++;
+    printf("%d\n", count); 
+}
+
+func(); // Output: 1
+func(); // Output: 2
+4. Register Storage Class (register)
+Suggests that the variable be stored in the CPU register (faster access).
+Useful for frequently accessed variables like loop counters.
+Scope: Local to the block.
+Lifetime: Exists only during the execution of the block.
+Default Value: Garbage value (uninitialized).
+Keyword: register.
+Note: Modern compilers may ignore register if no registers are available.
+Example
+
+void func() {
+    register int i; // Stored in CPU register
+    for (i = 0; i < 10; i++) {
+        printf("%d ", i);
+    }
+}
+
+2. String and Character Array in C
+In C, strings are a sequence of characters terminated by a null character (\0), which signifies the end of the string. Character arrays are used to store strings.
+
+Difference Between String and Character Array
+Aspect	String	Character Array
+Definition	A null-terminated sequence of characters.	A collection of characters that may or may not form a string.
+Termination	Always ends with a null character (\0).	May or may not be null-terminated.
+Usage	Specifically used for storing and manipulating text.	Used for storing multiple characters.
+Declaring a String
+A string in C is essentially a 1D character array.
+
+Ways to Declare a String
+Initialize character array with a string literal
+
+char str1[] = "Hello"; // Automatically adds '\0' at the end
+Manually specify characters
+
+char str2[] = {'H', 'e', 'l', 'l', 'o', '\0'}; // Null character is mandatory
+Pointer to a string
+
+char *str3 = "Hello"; // Pointer to a string literal
+Input and Output of Strings
+Strings in C can be manipulated using scanf, printf, or string handling functions.
+
+Input Example
+
+#include <stdio.h>
+int main() {
+    char name[50]; 
+    printf("Enter your name: ");
+    scanf("%s", name); // Reads a single word (stops at whitespace)
+    printf("Hello, %s!", name);
+    return 0;
+}
+Output Example
+If input is John, the output will be:
+
+Hello, John!
+
+Difference Between scanf and gets
+scanf stops reading at whitespace.
+gets reads an entire line until a newline (\n) is encountered.
+String Manipulation Using Library Functions
+The <string.h> library provides various functions to manipulate strings:
+
+Function		Description						Example
+strlen()	Finds the length of a string.				strlen("Hello") → 5
+strcpy()	Copies one string into another.				strcpy(dest, src)
+strcat()	Concatenates two strings.				strcat(str1, str2)
+strcmp()	Compares two strings. Returns 0 if they are equal.	strcmp("abc", "abc") → 0
+
+Example Program: Character Array and String
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char str1[20] = "Hello"; // Character array with string
+    char str2[20] = "World";
+    char result[40];
+
+    // Display strings
+    printf("String 1: %s\n", str1);
+    printf("String 2: %s\n", str2);
+
+    // Concatenate strings
+    strcpy(result, str1);  // Copy str1 to result
+    strcat(result, " ");   // Add a space
+    strcat(result, str2);  // Append str2
+    printf("Concatenated String: %s\n", result);
+
+    // Find length of string
+    printf("Length of result: %lu\n", strlen(result));
+
+    return 0;
+}
+Output:
+
+Copy code
+String 1: Hello  
+String 2: World  
+Concatenated String: Hello World  
+Length of result: 11  
+
+3. Structure as a Function Argument in C
+In C, structures can be used as function arguments to pass complex data types. You can pass a structure to a function in the following ways:
+
+By Value
+By Reference (using pointers)
+1. Passing Structure by Value
+A copy of the structure is passed to the function.
+Changes made to the structure inside the function do not affect the original structure.
+Suitable for small structures but inefficient for large ones due to copying overhead.
+Example: Passing by Value
+#include <stdio.h>
+
+// Define a structure
+struct Student {
+    int id;
+    char name[50];
+};
+
+// Function to display structure data
+void displayStudent(struct Student s) {
+    printf("Student ID: %d\n", s.id);
+    printf("Student Name: %s\n", s.name);
+}
+
+int main() {
+    struct Student s1 = {101, "John"};
+    
+    // Pass structure by value
+    displayStudent(s1);
+    return 0;
+}
+
+2. Passing Structure by Reference (Using Pointers)
+A pointer to the structure is passed to the function.
+Changes made to the structure inside the function affect the original structure.
+Efficient for large structures since only the memory address is passed.
+Example: Passing by Reference
+#include <stdio.h>
+
+// Define a structure
+struct Student {
+    int id;
+    char name[50];
+};
+
+// Function to modify structure data
+void modifyStudent(struct Student *s) {
+    s->id = 202;  // Modify using pointer
+    strcpy(s->name, "Alice");  // Update name
+}
+
+int main() {
+    struct Student s1 = {101, "John"};
+    
+    printf("Before Modification:\n");
+    printf("ID: %d, Name: %s\n", s1.id, s1.name);
+    
+    // Pass structure by reference
+    modifyStudent(&s1);
+
+    printf("After Modification:\n");
+    printf("ID: %d, Name: %s\n", s1.id, s1.name);
+    
+    return 0;
+}
+
+Aspect			By Value
+Data Copy		Copies the entire structure.
+Efficiency		Less efficient for large structures.
+Original Structure	Remains unchanged by the function.
+Use Case		Suitable for small structures or read-only.
+
+Aspect			By Reference
+Data Copy		Passes only the memory address (pointer).
+Efficiency		More efficient for large structures.
+Original Structure	Can be modified by the function.
+Use Case		Suitable for large structures or if modification is needed.
+
+
+4. Pointer to Structure in C
+In C, a pointer to a structure is used to store the memory address of a structure. This allows efficient access and modification of structure members, especially when dealing with large structures or passing structures to functions.
+
+Syntax for Pointer to Structure
+Declaring a Structure Pointer
+
+struct StructName *ptr;
+Assigning Address of a Structure to Pointerstruct StructName obj;
+ptr = &obj;  // Assign address of 'obj' to pointer
+Accessing Members Using Pointer
+Arrow Operator (->):
+
+ptr->memberName;  // Access member
+Example: Pointer to Structure
+
+#include <stdio.h>
+
+// Define a structure
+struct Student {
+    int id;
+    char name[50];
+};
+
+int main() {
+    // Declare a structure variable
+    struct Student s1 = {101, "John"};
+    
+    // Declare a pointer to the structure
+    struct Student *ptr;
+    
+    // Assign the address of the structure variable to the pointer
+    ptr = &s1;
+    
+    // Access and print structure members using the pointer
+    printf("Student ID: %d\n", ptr->id);
+    printf("Student Name: %s\n", ptr->name);
+    
+    // Modify structure members using the pointer
+    ptr->id = 202;
+    strcpy(ptr->name, "Alice");
+    
+    // Print modified structure members
+    printf("\nModified Student ID: %d\n", ptr->id);
+    printf("Modified Student Name: %s\n", ptr->name);
+    
+    return 0;
+}
+Output
+
+Student ID: 101  
+Student Name: John  
+
+Modified Student ID: 202  
+Modified Student Name: Alice
+Advantages of Pointer to Structure
+Efficient Access: Avoids copying the structure when passing it to functions.
+Direct Modification: Allows modification of the original structure through the pointer.
+Dynamic Memory Allocation: Enables dynamic creation and management of structures.
+Dynamic Memory Allocation for Structure
+You can dynamically allocate memory for a structure using malloc or calloc.
+
+Example: Dynamic Memory Allocation
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define a structure
+struct Student {
+    int id;
+    char name[50];
+};
+
+int main() {
+    // Dynamically allocate memory for a structure
+    struct Student *ptr = (struct Student *)malloc(sizeof(struct Student));
+    
+    // Assign values to structure members
+    ptr->id = 101;
+    strcpy(ptr->name, "John");
+    
+    // Print structure members
+    printf("Student ID: %d\n", ptr->id);
+    printf("Student Name: %s\n", ptr->name);
+    
+    // Free allocated memory
+    free(ptr);
+    
+    return 0;
+}
+Output
+Student ID: 101  
+Student Name: John
+
+5. Definition of Data Type
+A data type in C defines the type of data a variable can store and determines the amount of memory allocated for that variable. It also specifies the operations that can be performed on that data.
+
+Types of Data Types in C
+C provides three main categories of data types:
+
+Primary (Basic) Data Types
+Derived Data Types
+User-Defined Data Types
+1. Primary (Basic) Data Types
+These are the fundamental data types in C. They include:
+
+Data Type	Description				Size (Typically)		Example
+int	Stores integers (whole numbers).		4 bytes				int num = 25;
+float	Stores floating-point numbers (decimals).	4 bytes				float pi = 3.14;
+double	Stores double-precision floating points.	8 bytes				double area = 42.67;
+char	Stores a single character.			1 byte				char grade = 'A';
+_Bool	Stores a boolean value (true/false).		1 byte (needs <stdbool.h>)	bool flag = true;
+Key Points:
+The size of these data types may vary depending on the system architecture (32-bit or 64-bit).
+Signed and Unsigned Modifiers:
+Signed: Can store both positive and negative values.
+Unsigned: Can only store positive values, increasing the range.
+Example: unsigned int num = 100;
+2. Derived Data Types
+These are created from basic data types and include:
+
+Data Type		Description						Example
+Array		Stores a collection of data of the same type.		int arr[5] = {1, 2, 3, 4, 5};
+Pointer		Stores the memory address of another variable.		int *ptr = &num;
+Function	Used to group reusable code.				int add(int a, int b);
+String		Array of characters terminated by a null character.	char name[] = "John";
+3. User-Defined Data Types
+These are created by the programmer to represent complex data. They include:
+
+Data Type		Description						Example
+struct		Groups multiple variables of different types.		struct Point { int x, y; };
+union		Groups variables, sharing the same memory location.	union Data { int i; float f; };
+enum		Defines a set of named integer constants.		enum Color { RED, GREEN, BLUE };
+typedef		Creates a new name (alias) for an existing data type.	typedef unsigned int uint;
+Explanation of Each Data Type
+1. int
+Used to store integer values.
+Signed int: Stores values from -2,147,483,648 to 2,147,483,647.
+Unsigned int: Stores values from 0 to 4,294,967,295.
+2. float and double
+float: Used for single-precision floating-point numbers (up to 6 decimal digits).
+double: Used for double-precision floating-point numbers (up to 15 decimal digits).
+3. char
+Used to store a single character, enclosed in single quotes ('A').
+Stored as an ASCII value in memory.
+4. _Bool
+Stores boolean values (true or false).
+Requires <stdbool.h> to use true and false.
+5. struct
+Groups variables of different types.
+Example:
+
+struct Student {
+    int id;
+    char name[50];
+    float marks;
+};
+6. union
+Similar to struct, but all members share the same memory location.
+Only one member can hold a value at any time.
+Example:
+
+union Data {
+    int i;
+    float f;
+};
+7. enum
+Used to define named constants.
+Example:
+
+enum Weekday { MON, TUE, WED, THU, FRI, SAT, SUN };
+8. typedef
+Simplifies complex type definitions.
+Example:
+
+typedef unsigned int uint;
+uint age = 25;
+Hierarchy of C Data Types
+
+Data Types
+   ├── Primary (int, float, double, char, _Bool)
+   ├── Derived (Array, Pointer, Function, String)
+   └── User-Defined (struct, union, enum, typedef)
+Summary
+Primary Data Types: Basic types like int, float, double, char.
+Derived Data Types: Arrays, pointers, and strings created from basic types.
+User-Defined Data Types: Custom types like struct, union, enum.
+Each data type has specific size, range, and purpose.
+
+7. Jumping Statements in C
+Jumping statements in C are used to transfer control from one part of a program to another unconditionally. These statements bypass the normal flow of execution and are typically used for:
+
+Exiting loops.
+Skipping iterations.
+Exiting functions or terminating the program.
+C provides the following jumping statements:
+
+break
+continue
+goto
+return
+1. break Statement
+The break statement is used to terminate the execution of the nearest enclosing loop (for, while, do-while) or switch-case block prematurely.
+
+Syntax
+
+break;
+Usage in Loops
+
+#include <stdio.h>
+
+int main() {
+    for (int i = 1; i <= 10; i++) {
+        if (i == 5) {
+            break; // Exit loop when i equals 5
+        }
+        printf("%d ", i);
+    }
+    return 0;
+}
+Output:
+
+
+1 2 3 4
+Usage in Switch-Case
+
+#include <stdio.h>
+
+int main() {
+    int choice = 2;
+
+    switch (choice) {
+        case 1:
+            printf("Choice is 1\n");
+            break;
+        case 2:
+            printf("Choice is 2\n");
+            break; // Exit switch after case 2
+        default:
+            printf("Invalid choice\n");
+    }
+    return 0;
+}
+Output:
+
+Choice is 2
+2. continue Statement
+The continue statement skips the remaining code in the current iteration of a loop and starts the next iteration.
+
+Syntax
+
+continue;
+Example
+
+#include <stdio.h>
+
+int main() {
+    for (int i = 1; i <= 5; i++) {
+        if (i == 3) {
+            continue; // Skip when i equals 3
+        }
+        printf("%d ", i);
+    }
+    return 0;
+}
+Output:
+
+1 2 4 5
+3. goto Statement
+The goto statement transfers control to a labeled statement elsewhere in the program. It should be used with caution, as it can make programs difficult to read and debug.
+
+Syntax
+
+goto label;
+...
+label: statement;
+Example
+
+#include <stdio.h>
+
+int main() {
+    int i = 1;
+
+    start: // Label
+    if (i <= 5) {
+        printf("%d ", i);
+        i++;
+        goto start; // Jump to the label
+    }
+    return 0;
+}
+Output:
+
+1 2 3 4 5
+Drawbacks of goto
+Can lead to spaghetti code (unstructured and hard-to-follow code).
+Should be avoided unless absolutely necessary.
+4. return Statement
+The return statement is used to terminate a function and optionally return a value to the calling function.
+
+Syntax
+
+return;        // Without a value (for void functions)
+return value;  // With a value (for other functions)
+Example: Returning a Value
+
+#include <stdio.h>
+
+int add(int a, int b) {
+    return a + b; // Return the sum
+}
+
+int main() {
+    int sum = add(5, 3);
+    printf("Sum: %d\n", sum);
+    return 0; // Exit program
+}
+Output:
+
+Sum: 8
